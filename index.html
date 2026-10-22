@@ -308,6 +308,13 @@
     font-size:.92rem;
   }
   .result-action-btn.solid{ background:var(--red); border-color:var(--red); color:#fff; }
+  .mo-call-link{
+    display:block; width:100%; max-width:320px; margin:0 auto 18px; text-align:center; text-decoration:none;
+    background:#fff; border:2px solid var(--red); color:var(--red-dark); padding:13px; border-radius:999px;
+    font-weight:900; font-family:"Zen Maru Gothic",sans-serif; font-size:.95rem;
+    box-shadow:0 4px 12px rgba(92,20,27,0.12);
+  }
+  .mo-call-link:active{ background:var(--cream-dark); }
   .result-kept-note{ font-size:.78rem; color:#6b5c50; margin-top:14px; font-family:"Zen Maru Gothic",sans-serif; }
 
   /* ===== ローディング ===== */
@@ -367,7 +374,7 @@
       <p class="mo-label">MENU</p>
       <h1 class="mo-title brush">ご注文はこちらから</h1>
       <button class="mo-view-last-btn" id="viewLastOrderBtn" style="display:none;">直前の注文番号をもう一度見る</button>
-      <a class="mo-view-last-btn" href="call-number.html">呼び出し中の番号を確認する</a>
+      <a class="mo-call-link" href="call-number.html">呼び出し中の番号を確認する</a>
       <div id="menuList"></div>
     </main>
   </div>
@@ -415,7 +422,7 @@
           <div id="orderSummaryList"></div>
           <div class="os-total"><span>合計</span><span id="orderSummaryTotal">¥0</span></div>
         </div>
-        <a class="mo-view-last-btn" href="call-number.html">呼び出し中の番号を確認する</a>
+        <a class="mo-call-link" href="call-number.html">呼び出し中の番号を確認する</a>
         <button class="result-action-btn solid" id="newOrderBtn">新しい注文をする</button>
         <p class="result-kept-note">※番号はメニュー画面の「直前の注文番号をもう一度見る」から後で確認できますが、念のためスクリーンショットでの保存もおすすめします。</p>
       </div>
