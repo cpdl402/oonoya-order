@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>呼出番号｜らーめん 大野家</title>
+<meta name="description" content="らーめん大野家の呼出番号の確認ページ。いま呼び出し中の番号がリアルタイムで確認できます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#a3242f; --red-dark:#7c1c25; --red-deep:#5c141b;
+    --cream:#fbf4e8; --cream-dark:#f2e6d1; --ink:#2a201c; --gold:#c9a24b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"Zen Maru Gothic",sans-serif;
+    background:var(--cream);color:var(--ink);
+    line-height:1.7;overflow-x:hidden;min-height:100vh;
+  }
+  .brush{font-family:"Yuji Syuku",serif;}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:var(--cream);border-bottom:1px solid rgba(163,36,47,0.15);
+  }
+  .header-inner{
+    max-width:900px;margin:0 auto;padding:6px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .header-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .header-logo img{height:48px;width:auto;}
+  .header-logo span{font-family:"Yuji Syuku",serif;font-size:1.25rem;color:var(--red-dark);}
+  .back-link{
+    color:var(--red-dark);text-decoration:none;font-size:0.78rem;font-weight:700;
+    padding:8px 14px;border:1px solid var(--red-dark);border-radius:999px;white-space:nowrap;
+  }
+  
+
+  main{padding-top:72px;}
+
+  .intro{
+    text-align:center;background:var(--red-deep);color:#f3e7d8;
+    padding:34px 20px 30px;
+  }
+  .intro-label{font-size:0.75rem;letter-spacing:.28em;color:var(--gold);font-weight:700;margin-bottom:8px;}
+  .intro-title{font-family:"Yuji Syuku",serif;font-size:clamp(1.8rem,7vw,2.6rem);}
+  .intro-lede{font-size:0.88rem;color:#e7d9c6;margin-top:8px;}
+
+  .board{max-width:720px;margin:0 auto;padding:28px 20px 12px;}
+  .board-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .board-title{font-family:"Yuji Syuku",serif;font-size:1.4rem;color:var(--red-dark);}
+  .board-count{font-size:0.82rem;color:#6b5c50;font-weight:700;}
+
+  .numbers{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;
+  }
+  .num{
+    background:#fff;border:2px solid var(--red);border-radius:16px;
+    text-align:center;padding:14px 6px;
+    font-size:clamp(2rem,9vw,2.8rem);font-weight:900;color:var(--red-dark);
+    letter-spacing:.04em;font-variant-numeric:tabular-nums;
+    box-shadow:0 6px 16px rgba(92,20,27,0.1);
+  }
+  .num.fresh{animation:pulse 1.2s ease-out 3;background:#fff7e0;border-color:var(--gold);}
+  @keyframes pulse{0%{transform:scale(1);}35%{transform:scale(1.07);}100%{transform:scale(1);}}
+
+  .empty{
+    background:var(--cream-dark);border-radius:14px;padding:30px 20px;
+    text-align:center;color:#6b5c50;font-weight:700;
+  }
+  .status{
+    max-width:720px;margin:0 auto;padding:6px 20px 0;
+    font-size:0.78rem;color:#8a7a6d;text-align:center;
+  }
+  .status.error{color:#c1440e;font-weight:700;}
+
+  .note{
+    max-width:720px;margin:24px auto 0;padding:0 20px 48px;
+  }
+  .note ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .note li{
+    background:var(--cream-dark);border-left:4px solid var(--gold);
+    border-radius:0 10px 10px 0;padding:12px 16px;font-size:0.84rem;color:#5a4a3d;
+  }
+  footer{background:var(--ink);color:#cabfb3;text-align:center;padding:30px 20px;font-size:0.8rem;}
+  footer a{color:#e7cfa8;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="header-logo" href="./">
+      <span>らーめん 大野家</span>
+    </a>
+    <a class="back-link" href="./">注文ページへ</a>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <p class="intro-label">CALL NUMBER</p>
+    <h1 class="intro-title">呼出番号</h1>
+    <p class="intro-lede">いま呼び出し中の番号です。ご自身の番号が出たらテントでお受け取りください。</p>
+  </section>
+
+  <section class="board">
+    <div class="board-head">
+      <h2 class="board-title">呼び出し中</h2>
+      <span class="board-count" id="count"></span>
+    </div>
+    <div class="numbers" id="numbers"></div>
+    <div class="empty" id="empty" style="display:none;">現在、呼び出し中の番号はありません</div>
+  </section>
+  <p class="status" id="status">読み込み中…</p>
+
+  <section class="note">
+    <ul>
+      <li>この画面は約5秒ごとに自動で更新されます。</li>
+      <li>表示が遅れる場合があります。聞き逃さないよう、係の呼び出しにもご注意ください。</li>
+      <li>お受け取りが済んだ番号は、一覧から消えます。</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <a href="./">モバイルオーダーのページに戻る</a>
+</footer>
+
+<script>
+  // 呼出番号の取得先(GASウェブアプリ ?page=calling)。再デプロイでURLが変わったらここを更新する
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyW8m-ffYOVxwr2OFQ0uDU8matrFBB_xueRA0PJt2pHEcd-CD8qymn_4PeiQuRo1CusDw/exec?page=calling';
+  const POLL_MS = 5000;
+
+  const $numbers = document.getElementById('numbers');
+  const $empty = document.getElementById('empty');
+  const $count = document.getElementById('count');
+  const $status = document.getElementById('status');
+
+  let known = null; // 前回表示した番号の集合(新しく呼ばれた番号の強調用)
+
+  function render(calling) {
+    // 新しく呼ばれたものが先頭に来るよう、取得順(古い順)を逆順にして表示する
+    const list = calling.slice().reverse();
+    const prev = known;
+    known = new Set(calling.map(String));
+
+    $numbers.innerHTML = '';
+    list.forEach(function (n) {
+      const el = document.createElement('div');
+      el.className = 'num' + (prev && !prev.has(String(n)) ? ' fresh' : '');
+      el.textContent = n;
+      $numbers.appendChild(el);
+    });
+    $empty.style.display = list.length ? 'none' : 'block';
+    $count.textContent = list.length ? list.length + '件' : '';
+  }
+
+  async function refresh() {
+    try {
+      const res = await fetch(API_URL, { cache: 'no-store' });
+      const data = await res.json();
+      if (!data || !Array.isArray(data.calling)) throw new Error('bad response');
+      render(data.calling);
+      const t = new Date(data.updatedAt || Date.now());
+      $status.className = 'status';
+      $status.textContent = '最終更新 ' + t.toLocaleTimeString('ja-JP');
+    } catch (e) {
+      $status.className = 'status error';
+      $status.textContent = '最新の情報を取得できませんでした。通信状況をご確認ください(自動で再試行します)';
+    }
+  }
+
+  refresh();
+  setInterval(function () { if (!document.hidden) refresh(); }, POLL_MS);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) refresh(); });
+</script>
+</body>
+</html>
