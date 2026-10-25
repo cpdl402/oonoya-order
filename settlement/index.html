@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>精算明細 | 育英祭2026 らーめん大野家</title>
+<style>
+:root{
+  --bg:#FBF4E8; --bg2:#F2E6D1; --card:#FFFFFF; --line:#F2E6D1; --text:#2A201C; --muted:#8A7A6C;
+  --primary:#A3242F; --primary-dark:#7C1C25; --primary-deep:#5C141B; --gold:#C9A24B;
+  --green:#4F7942; --red:#C1440E; --tint:#F8ECD6; --shadow:0 6px 18px rgba(92,20,27,0.10);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--text);font-family:'Zen Maru Gothic',-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+  font-size:16px;line-height:1.6;font-weight:500;
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 50% 0, transparent 20%, rgba(163,36,47,0.045) 21%, rgba(163,36,47,0.045) 34%, transparent 35%, transparent 100%),
+    radial-gradient(circle at 50% 100%, transparent 20%, rgba(163,36,47,0.045) 21%, rgba(163,36,47,0.045) 34%, transparent 35%, transparent 100%);
+  background-size:56px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo-img{display:block;height:40px;width:auto;background:#fff;object-fit:contain;border-radius:10px;border:1px solid var(--line)}
+.brand span{font-family:'Yuji Syuku',serif;font-weight:400;font-size:28px;letter-spacing:.06em;color:var(--text)}
+.wrap{max-width:720px;margin:0 auto;padding:22px 16px 48px}
+.crumb{font-size:20px;margin:4px 0 6px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-weight:900}
+.crumb .muted{color:var(--muted);font-weight:700}
+.crumb b{font-weight:900;color:var(--primary-dark)}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 12px;font-size:13px;font-weight:800;line-height:1.6}
+.pill.open{background:var(--gold);color:#402c00} .pill.done{background:var(--green);color:#fff}
+.meta{color:var(--muted);font-size:14px;margin-bottom:18px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;margin-bottom:18px;overflow:hidden;box-shadow:var(--shadow)}
+.card h2{margin:0;padding:12px 18px;font-size:14px;font-weight:900;color:var(--primary-dark);background:var(--tint);border-bottom:1px solid var(--line);letter-spacing:.04em}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:16px}
+.row:last-child{border-bottom:0}
+.row .l{display:flex;align-items:baseline;gap:10px;min-width:0}
+.row .sign{font-family:'JetBrains Mono',monospace;color:var(--green);font-weight:700}
+.row .sub{color:var(--muted);font-size:13px;font-weight:700}
+.amt{font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap}
+.row.total{background:var(--tint);font-weight:900;font-size:18px;color:var(--primary-dark);border-top:2px solid var(--gold)}
+.row.total .amt{font-size:24px}
+.body{padding:18px}
+.body p{margin:0 0 14px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:14px;border:2px solid var(--line);border-radius:14px;margin-bottom:16px;cursor:pointer;background:var(--bg)}
+.check input{width:26px;height:26px;margin-top:1px;flex:none;accent-color:var(--primary)}
+label.f{display:block;font-size:14px;font-weight:900;margin-bottom:6px;color:var(--primary-dark)}
+input[type=text]{width:100%;padding:14px;font-size:17px;font-family:inherit;border:2px solid var(--line);border-radius:14px;background:var(--bg);color:var(--text)}
+input[type=text]:focus{outline:none;border-color:var(--primary)}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 16px}
+button{font:inherit;cursor:pointer}
+.btn{display:block;width:100%;min-height:56px;padding:12px;border:none;border-radius:16px;background:var(--primary);color:#fff;font-size:18px;font-weight:900;letter-spacing:.08em;box-shadow:0 4px 0 var(--primary-deep)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--primary-deep)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sm{display:inline-block;width:auto;min-height:42px;padding:6px 16px;font-size:14px;font-weight:800;letter-spacing:0;background:var(--card);color:var(--primary-dark);border:2px solid var(--line);border-radius:12px;box-shadow:none}
+.btn.sm.danger{color:var(--red)}
+.err{margin-top:12px;padding:10px 14px;border-radius:12px;background:#FCE9DF;color:var(--red);font-size:14px;font-weight:700;display:none}
+.signed{display:flex;gap:14px;align-items:flex-start;padding:18px;background:#EEF4EA}
+.signed .ic{width:40px;height:40px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.signed .nm{font-weight:900;font-size:17px;color:var(--green)}
+.signed .at{color:var(--muted);font-size:14px;font-weight:700}
+.note{font-size:13px;color:var(--muted)}
+.admin-row{padding:14px 18px;border-bottom:1px solid var(--line)}
+.admin-row:last-child{border-bottom:0}
+.admin-row .top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.admin-row .nm{font-weight:900}
+.admin-row .acts{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:800;border-radius:999px;padding:2px 10px;background:var(--bg2);color:var(--muted)}
+.tag.ok{background:var(--green);color:#fff}
+.center{text-align:center;padding:60px 16px}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><img class="logo-img" alt="大野家" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAB4ALEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HSKPYv7tenpS+VF/zzX8qcn3F+lLQAzyov8Anmv5UeVF/wA81/Kn0UAM8qL/AJ5r+VHlRf8APNfyp9FADPKi/wCea/lR5UX/ADzX8qfXKeP/AIg+GPBNqH1m+H2l1zFaQ/PNJ7hew9zgUm0ldl06U6slCCu2dR5UX9xfyo8qL/nmv5V85eKPjN4pvVLxy2XhDT3GY/NT7RfSL6hCML9SoHvWJp7eKvFWJdP8MeJvE4bpd6xePFbn3CZCY+hrL266Hqxyaqo81RpL+uraX4n1E0tirbWkgB9CwqVY4WAKohB7gV86W/w4+JMq5HhTwLYj+7LGJCPx+ap/+EK+K2mnzLbw74ZlZeQdOvJbST8CjpR7R/ykvLqWyrR+9f52PoXyov7i/lR5UX/PNfyrwnSPiX4p8I3EcHjjw54htbMHa00uy5T8JMKfzZq9b8I+MPDniu3abQtUguigBki5WWP/AHkOGH1xirjUUjkxGBrUFzNXj3Wq+9G35UX/ADzX8qPKi/55r+VPoqzkGeVF/wA81/Kjyov+ea/lT6KAGeVF/wA81/Kjyov+ea/lT6KAGeVF/wA81/KgxRY/1a/lT6D0oAx/Jj/uD8qKfRQBqJ9xfpS0ifcX6UtABRRRQAUUVznxI8Tw+EPB1/rciiSWJNlvF/z1mY4RPxJ/IGk3ZXZdOEqklCO7OH+N/wAVH8My/wDCN+GxHPr8qbpJGwUs0IzubPG7HODwByewPhPg/RfEXjLxLLFoRfUNTkbfe61dElYc/wAQJHHscbj/AAhRVTw1o2tePPGJ0e1nM97fytPqd63IAzl2P+yp6D+JsdsY+s9H0/wt8NPBgiEsOnabajdNcTH5pXPBZj/EzHt9AOwrkV6r5nokfV1HTyumqNJc1SX9f8MvvMD4ffB7wt4Y23t7CNb1cndJeXi7wG9UQ5A+py3vXo4AAAA4HSuZ0jx94S1W8v7ay1mF20+Ez3DsrJGsY+8wdgFIXuQeK0tF8RaLrV1c22lahFdyW0cMkvl5KhJU3xsG6EMvIIJrpg4JWifPYqOLnJzrqV1vdPRPb0WqNWismw8RaPfeJNS8O2t2JNT0yOGW7h2MPLWUEoc4wcgHgHI4z1Fa1WcQ2WOOWNo5EV0YYZWGQR7ivM/F/wAItOuL1dd8G3TeGdehJeKW24gc9wyDoD0O3j1Brv8AWda0rR7Q3Wp38FpCJo4N8jYHmSMFRfqzMoA96Z4i13SfD1gl9rF6lpbvcRWyOylt0sjhEQAAkksQKmUVLc2o4ipQd4O35P1XU5n4eeMb7ULuXwz4rsxpnie0TdJEP9XdR9POiPceoHT+XcVgeNPDUHiCzhkjmNlqtk/naffIuXt5f/ZkPRl6EfgaTwT4gfW7O4gv7dbPWNPl+z6jaA5EcmMhlPeNxhlPcH1BoV1oy6qjUXtIK3ddvTy/LbsdBRRRVHMFFFFABQelFB6UAZVFFFAGon3F+lLSJ9xfpS0AFFFFABXzN+1f4tNz4is/C9pL+709PPuMH/ls4wo+qoSf+B19MnpXw9qMZ8ZfFq4hhkaRdX1po1Y9fLaXGfwT+Vc+Jk1Gy6nv8PUIyryrT2gr/wBfK59FfszeD4/D/gaPWbiILqGsATsSOUh/5Zp+Xzf8C9q674paNe674PurGyaUvjeYY32tPgEhM5A5OOCcHHNfO37Qf7Q3ijwV8QB4Q8I6XDp1rojxC4a8hDG9XaCEUH7kRUgBh8x6jGOfp/wnrEPiHwvpevW8bxw6jZxXSI/3lWRAwB9xnFaKC5eU82pjKksT9Z63v/keM+APB/jC3n8Rz6nos2mi7tl2yWkkRlL7vuReYWIUgktuIHO0DgEWvA3hP4gR/FSHWdcsorSzVi9xPaSJHFKqWwhjiEaucpkBsEDGPwHt9Ude1fTNB0a71nWL2GysLSMyzzynCoo7n/DvULDxVtXod88+rydR8kffXK9HorJaa+R534P0v4k6L4xtrSVNIm0i5ubu81i6RCBIZGYxbGJ3tN9wEbRGiKFBY4xp3mkeL/8AhcEGvWZjGjfZVtJlmui0YiG53ZY8DbKXMYHUbUYkjIFcfYftD6WmvWbeIPC+r6D4T1fjRvEN0v7i6Pq6gZiU9QSScckAcjO/aq8Y/E/QH0qx+H95Aw1BHfydPsXudQ2oMvL0ZFiGUGduct1rY8WzuaPxG+FviLxZ4t1zVdTt9I1CCe1e10IG4kRtOkaNUW5cYwSpLthTkEKRkkbNPxZo3juTxX4alhtpr7Q/Cz2zu7mKW51aVkMcswVmAQxr3PJMjlegNM/Zc+JmvfEbwnf/APCTaa1rq2k3K208wgaJLjK5DbT91xghlHA4PGcD1+gT00IbNp3tke5iEUrDJjBzs9sjqRXFfED/AIprX9N8cwfJAjJYayB0e1kbCSH3ikIOf7rNWt8TtQ8U6X4H1O/8F6Tb6trsMYa1tZnwr/MN3cbiFyQuRkgDNfEPib4qfHvxLY6xb6hPqNvp1tG8epRJpUdvDAjZBWRnTg9gC249s0pbG1CXJO726+h+gYORmivnv9lP45xeN7SDwd4jKQeIrWDFvKOFv40HJHpIAMsO/UdwPoSqRi1ZhRRRQIKD0ooPSgDKooooA1E+4v0paRPuL9KWgAooooAxvHV3JYeCtbvos+Zb6fPImOuRGxFfF/wj8S+F/DXxL0jUfE2r29haWe+WR3yxDeUwX5VBOSSO1fVnx/1n+xfhRrUqNtluohZx/WU7T/46WP4V8PXegeGLue71DXry60+KO0mk8y22lpZVQmJMMCCWYBfxrlqtOpFM+lyyFWOXVpwS10fpbW33kP7S3i7SvHXxe1bXNDuGuNMeGC3tpjGyF1SMAnDAEfMW6iu1tf2qvHNleaTbaZpeh2ekafGkA04IzGeNVCgNITlSABjaBz1BHFeL+D5tOt/FWkz6zpz6np8d3E93ZRthriMMNyD6jj36cV+hvwfvfhLrto9x4D0rRLO5tzi5tU05La7t29JIyodfr09DXQj5+Vkjo/D/AIkuvE3w0t/E+madcWV5faabmC0ukIeOUoSEYEDPzd+MjnvXwv4c8deO9c+EfxE0C4ujqhnaHVdTe/lZpYod4SYxA8BhIIcjoADgZr9D6+GP2lfhDqfhLxpqesaG2qahpmvJd3k0VpEYks/mEjCZ/utCCc4OOg74JGTCxheH7DxZ8Ufhf4Q+Heg2k9zb6Tf3dxf6lNGUtdORyQiPIeDtQyPjr8yqBXbeBrz4nWHxPuPFngJL7UPAUXkWAvtamigtJ7C3AjykkhBVAfMZCvrzuya4TwZ4u8eaL+z7qllY6Tqt54audUWK4uvKUW1vCAXmiDAFiZWO12YFVA29WIHSeJrrxvfeJPhHc6tqU4Os3cV5b+H7ALAlokc0flD5mAaRkOdz4C9BgDFBTPqS2+M3w2l8WL4WbxJFbarIVEcd1bywLIWGVCvIoUkgjHPOeM16DXzB44+AXiz4s+P5/Ffi7U7bw3DJHFCLK3jWeSOJN3yhw2GbnO8gcnhcAZ998X6k/hbwVNNYRPeXsUSW2nwyNua4uGxHChPfLlcn0ye1MzaXQ+bf2rPj3r2ieN08H+CdQW0GlvHJqVwgDNLNkMIM9kAxuxgksVyMHPlnxJ8SeKPG/iLTbb4w+L08P2fyyrptlZtO1oCMh5LdG+RyD/y0YuAfugV2X7R+neEvAWgaP4Us9USTxuZDqOp6kNPV55ZpiC87znLRAlWKpGCeB93GT5NoGm+FdYvYdA0LRfE3izxNqLlIJZLtLGESkElggDu4GCxZ3XgEkCpNElY+oP2VvhL4AtLf/hN7C4m167t9QuItM1GR2SMxKdqyLGMAMVLDJz1NfR1fEXiDW/jl8Hp9L0ebxI+rWrIlzMimKUxzAZkhzkyFQGTO4ANngYANfT3wW+Iy/ELSLuaTTTYXdk0aToJNyMWUkFe4HB4PT1NKM1fl6nRUwtSVN10vd/r7/kd/RRRWhxBQelFB6UAZVFFFAGon3F+lLSJ9xfpS0AFFFFAHnH7SA0j/AIVJq8urrnyY/NtMKzN54B2bQvJPX2654r4Pe01PxbrVrabW03TWnWPz51O1AzAGQjq2Ac4H51+ms0aSxNFIiujgqysMhgeoNfDnxW8NHwr491XRhE0dqspktAe8D8pg+wyv/ATXLX91qaR9HkkVioyws5NLey6/1ofRvh79n74Zad4Dh8LXvh+11UgFptRnjC3UkpHMgkX5k9lU4AA6858r+N/wq8U+B4tP8Z+C9Vm1G00OPMvnzCLUo4l54uAAZUVRjawJx2bkV7R8FvG9v4g+Gtne3cxa8sFFpegDLb0HDH/eXB/P0rcuPGGhOj7o7iYx54+zlvbryBWkq1KKTbseLUw9WnUlTa1TscB+zF8aYvijo8+narFHa+JNOjV7hYx+7uIicCZPTnAZexIxwRjP+IvwJ1b4g/Fp9d8T+MJpPCYijSLSrcNHJtUgmIkfLtLjcX5Y9OMAjb8EaF4H8NeK9U8TeEPCk9vf6nGsU6W5IhVQdx2R4wuTgnHUiu2bxWYCftWl3sYx18lh/MVCxVJrch0pp6Ipazqvh/4a6FZ2txpiad4Vt4RbrNbxFo7TGeJFAyEI/j55zu9T4F+0D4o8NzfHz4S67o+r6ZfWcd0HmltbhJEVWnjG5ip44J6+lfTNhrWk6vZyDzEKFCJYpQPu45BHQivHJ/hJ8GLL4gweKrHR5PtMMnnjT4HxZGUHKyeXg4IPIUELwOKt16aV+ZWFGnK9rHvQ6VyV9fQ6l8S7PRvOh2aTaG+lQyLuM0u6OLC9ThFnJ9Ny1bs/FtjLdpbzQz2xf7rSIQCfxFT6t4V8OaudRnu9Ltnn1Sy+w3V1GPLnltyD8nmrhgvzHoe9VCpCp8LuRKEo7o8Y/aqn8Pvp2ma1Y6J8Ote1OCTEsmvX0SMkAOdqAuu8Fs8buOcAk8fE+ns82tG4jvU08mVpBPa7gsZyTiMpyBzgc9K+/vCvwO+EHga9nv4tBtbmeUr5Z1NvtRhx0EauDjnvgn3rw745+LbfxL4xeDSRDHo2nZgs1gUKrn+OTAA6kYHsB71nVqKK8z1MqwMsZW5fsrVv9PmeTX/iNIZY5rvUjqe8hZZ2l3z5x95s8npX0p+xkguL3xDqELiSAwW6Kyng5Zz/AEr551HTLC/Qi7to3OPv4ww/4F1r6/8A2WfA0fgv4axuYHhudWk+2yI7ElUIxGpz/s8/8CrGglKSaPezqdbD4aVObTjKyXfT9LLues0UUV3HxYUHpRQelAGVRRRQBqJ9xfpS0ifcX6UtABRRRQAV5l8fvh2PGvh0XmnRL/benqWtu3np1aIn36j0P1Nem0VMoqSszbD4ieHqKpB6o+KPhL4yfwR4sWW/t2m0yVvJv7Z0yygH74U/xoc8emR3r66j1mK8tYT4dgiv45o1kSVDthCsMg578dq8g/aE+ElzqV3L4s8K2plun+a/sox80p/56oO7eq9+o5znzf4R/FPV/AV61hexzXujtIfPtHOJIG7tHnofVTwfY81xK9J8r0Xc+oxWHp5tSWJw/wAa3j/X4dz6J8RaDcQQz6tJq9vaXgUsEhj8tHI7dck++Kx7TxpqsMMcc10uxl4maPcx/oDXTaDq/hbxrpE+o6Fc21/I8RUhzmSFiOAyNyh/CsOW3sJfCokVSL60lTcsh5QAgMAO3vXNiKUqcuam7aX3ep4UH9irHVO22xz9ybG+eSW81G4W9kPAEQSJh6MeuffFWDpWqafaG9t4bk2mNzPFICNvrkH+lenz2NlrGkLFdwrIskYGSMlTjqD61xeiX0nhua/0TUrWa6h37E2AtuBHAA9welY1MIqck5vR9fPz3KhiHNNRW3T/ACGWV9qEtudJvrNbmOUCSCS5l2FR/eB7EH0rUtLPVIYwL3xNbWsB6IrBm/PIFZUkt9b2gtbnRBdWanMBuT5ciDoADwc4x0rzfx98UYNA1GbS9O0q1lv4PkkYsZEhb03MTkj26dM1cZW3u/vX/D/ea0cLUxMuSkvy/pHR/HLxRp3hPwoLfSUuLnVdZjkii1B+kSDAkYE9Gw2AAO+c8c/MI9BWr4l8Q6z4k1D7brN9LdSgbUDH5UHZVHYe1eqfBr4KahrV1b614ttpLLSVIdLSQFZbr03DqifXk+w5rdJ1HaKPqsPGllGFvWer38/JGt+zz8JtL1fRV8VeJ7U3cVySLK0kyE2BhiU45OSpAHTHrmvo4AAAAYA7UyCGK3hSCCNIoo1CoiKAqgcAADoKfXo04KCsj4nHY2pjKrqTfouyCiiirOMKD0ooPSgDKooooA1E+4v0paRPuL9KWgAooooAKKKKACuI+Inwv8K+NVae/tTa6jjC31thZfbd2cf7w+hFdvRScVJWZpSrVKMuem7M+UvEXwa+IHg2+GqeF7uXUVjOUn09zFcqPdM8/RSfpVCP4s+K9Pd7PxVo9rfy7djtdQvaXJHTllwG/FTX15VXUNOsNRi8m/sra7j/ALk8SyD8iDXPLDJ6JntRzv2iSxVNT89n/X3HznoHxk0aysY2mtLwSryVFw+Vb2AGD9cis3UfjTBJc/b7bQ71tRBwk014oRV7DaFJ/HNe1az8Hfh3qkolk8OQWz7sk2kjwA+xCkD9KWz+Dvw2tsbfC1tIR3mlkk/9CY1zrBSStfQ1jjcrXvOnK7/rufMfin4meKPEBaF7pLRZPlK22RIw9NxO78sVP4H+E/jPxVLG8OmPp1k3Ju75TGmPVVPzN+Ax719d6P4X8OaPg6VoWm2TDo0FqiN+YGa162hhEt2VPiBUocmFpKJ538N/hD4W8HeXdmH+1NVXn7ZcqDsP/TNOifXk+9eiUUV1RioqyPArV6lefPUldhRRRTMQooooAKD0ooPSgDKooooA1E+4v0paKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACg9KKKAMqiiigD//Z"><span>らーめん大野家</span></div></header>
+<div class="wrap" id="app"></div>
+
+<script>
+var API = 'https://script.google.com/macros/s/AKfycbzJXaYSa6IvcIJpUu60tcWTAJXLzNPOt_U41R0rYM8GuT0GVfmQazANQEQ_R0OWwS-9/exec';
+var T = new URLSearchParams(location.search).get('t') || '';
+var PAGE = { mode: 'loading' };
+function api(body){
+  return fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+    .then(function(r){ return r.json(); });
+}
+(function(){ var l = document.createElement('link'); l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Zen+Maru+Gothic:wght@500;700;900&family=JetBrains+Mono:wght@500;700&display=swap';
+  document.head.appendChild(l); })();
+var app = document.getElementById('app');
+
+function yen(n){ return '¥' + Number(n).toLocaleString('ja-JP'); }
+function el(tag, cls, text){
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function spaced(name){ return name.split('　').join(' '); }
+
+function renderInvalid(){
+  var d = el('div','center');
+  d.appendChild(el('div','', 'このリンクは無効です。'));
+  d.appendChild(el('div','note','届いたリンクをもう一度開いてください。'));
+  app.appendChild(d);
+}
+
+function statusPill(signed){
+  return signed ? el('span','pill done','署名済み') : el('span','pill open','確認待ち');
+}
+
+function renderPerson(){
+  var p = PAGE.person;
+  app.textContent = '';
+
+  var crumb = el('div','crumb');
+  crumb.appendChild(el('span','muted','精算明細 /'));
+  crumb.appendChild(el('b','', spaced(p.name)));
+  var pillBox = el('span'); pillBox.appendChild(statusPill(!!PAGE.sig));
+  crumb.appendChild(pillBox);
+  app.appendChild(crumb);
+  app.appendChild(el('div','meta','2026.10.24 – 10.25　育英祭　らーめん大野家'));
+
+  // 明細
+  var card = el('div','card');
+  card.appendChild(el('h2','','明細'));
+  var r = el('div','row');
+  var l = el('div','l'); l.appendChild(el('span','sign','+')); l.appendChild(el('span','','配当金'));
+  r.appendChild(l); r.appendChild(el('span','amt',yen(p.dividend)));
+  card.appendChild(r);
+  for (var i = 0; i < p.expenses.length; i++){
+    var ex = p.expenses[i];
+    var rr = el('div','row');
+    var ll = el('div','l');
+    ll.appendChild(el('span','sign','+'));
+    ll.appendChild(el('span','','立替経費の返金'));
+    ll.appendChild(el('span','sub', ex.item));
+    rr.appendChild(ll); rr.appendChild(el('span','amt',yen(ex.refund)));
+    card.appendChild(rr);
+  }
+  var tot = el('div','row total');
+  tot.appendChild(el('span','','お受け取り合計'));
+  tot.appendChild(el('span','amt',yen(p.total)));
+  card.appendChild(tot);
+  if (p.expenses.length){
+    var nt = el('div','row'); nt.style.display = 'block';
+    nt.appendChild(el('span','note','※ 立替経費は、提出していただいた金額を500円単位で繰り上げた金額で返金しています。'));
+    card.appendChild(nt);
+  }
+  app.appendChild(card);
+
+  // 署名
+  var sc = el('div','card');
+  sc.appendChild(el('h2','','確認と署名'));
+  if (PAGE.sig){
+    var s = el('div','signed');
+    s.appendChild(el('div','ic','✓'));
+    var b = el('div');
+    b.appendChild(el('div','nm', spaced(PAGE.sig.name) + ' さんが署名しました'));
+    b.appendChild(el('div','at', PAGE.sig.at + '　合計 ' + yen(PAGE.sig.total)));
+    s.appendChild(b);
+    sc.appendChild(s);
+  } else {
+    var body = el('div','body');
+    body.appendChild(el('p','','上の明細(配当金・立替経費の返金)の内容と金額を確認し、間違いがなければ署名してください。'));
+    var chk = el('label','check');
+    var cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'agree';
+    chk.appendChild(cb);
+    chk.appendChild(el('span','','明細の内容を確認し、' + yen(p.total) + ' を受け取ることに同意します。'));
+    body.appendChild(chk);
+    var lb = el('label','f','氏名(署名)'); lb.setAttribute('for','nm');
+    body.appendChild(lb);
+    var inp = document.createElement('input'); inp.type = 'text'; inp.id = 'nm';
+    inp.setAttribute('autocomplete','off'); inp.placeholder = spaced(p.name);
+    body.appendChild(inp);
+    body.appendChild(el('div','hint','上の欄にご自身の氏名(姓名)を入力してください。スペースは入れても入れなくても構いません。'));
+    var btn = el('button','btn','署名する'); btn.type = 'button';
+    body.appendChild(btn);
+    var err = el('div','err'); err.id = 'err';
+    body.appendChild(err);
+    sc.appendChild(body);
+
+    btn.onclick = function(){
+      err.style.display = 'none';
+      btn.disabled = true; btn.textContent = '送信中…';
+      api({ action: 'sign', t: p.token, name: inp.value, agreed: cb.checked })
+        .then(function(res){
+          if (res && res.ok){ PAGE.sig = res.sig; renderPerson(); window.scrollTo(0,0); }
+          else { showErr(res && res.msg ? res.msg : '署名できませんでした。'); }
+        })
+        .catch(function(e){ showErr('通信に失敗しました。もう一度お試しください。'); });
+    };
+    function showErr(m){
+      err.textContent = m; err.style.display = 'block';
+      btn.disabled = false; btn.textContent = '署名する';
+    }
+  }
+  app.appendChild(sc);
+  app.appendChild(el('div','note','金額に間違いがある場合は、署名せずに坪内までご連絡ください。署名後の変更は管理者が取り消した場合のみ可能です。'));
+}
+
+function renderAdmin(){
+  app.textContent = '';
+  var rows = PAGE.rows;
+  var done = 0;
+  for (var i = 0; i < rows.length; i++) if (rows[i].sig) done++;
+  var crumb = el('div','crumb');
+  crumb.appendChild(el('span','muted','管理者 /'));
+  crumb.appendChild(el('b','','署名状況'));
+  app.appendChild(crumb);
+  app.appendChild(el('div','meta', done + ' / ' + rows.length + ' 人が署名済み'));
+
+  var card = el('div','card');
+  card.appendChild(el('h2','','メンバー(個別リンクを各自に送ってください)'));
+  rows.forEach(function(r){
+    var d = el('div','admin-row');
+    var top = el('div','top');
+    var left = el('div');
+    left.appendChild(el('span','nm', spaced(r.name)));
+    left.appendChild(el('span','note','　' + yen(r.total)));
+    top.appendChild(left);
+    top.appendChild(el('span', r.sig ? 'tag ok' : 'tag', r.sig ? '署名済み ' + r.sig.at : '未署名'));
+    d.appendChild(top);
+    var acts = el('div','acts');
+    var cp = el('button','btn sm','リンクをコピー'); cp.type = 'button';
+    cp.onclick = function(){
+      var done = function(){ cp.textContent = 'コピーしました'; setTimeout(function(){ cp.textContent = 'リンクをコピー'; }, 1500); };
+      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(r.url).then(done, function(){ window.prompt('リンクをコピーしてください', r.url); }); }
+      else { window.prompt('リンクをコピーしてください', r.url); }
+    };
+    acts.appendChild(cp);
+    var op = el('a','btn sm','開く'); op.href = r.url; op.target = '_top'; op.style.textDecoration = 'none';
+    acts.appendChild(op);
+    if (r.sig){
+      var rs = el('button','btn sm danger','署名を取り消す'); rs.type = 'button';
+      rs.onclick = function(){
+        if (!window.confirm(spaced(r.name) + ' さんの署名を取り消しますか?')) return;
+        api({ action: 'reset', t: ADMIN, id: r.id })
+          .then(function(res){ if (res && res.ok){ PAGE.rows = res.rows; renderAdmin(); } })
+          .catch(function(){ window.alert('通信に失敗しました。'); });
+      };
+      acts.appendChild(rs);
+    }
+    d.appendChild(acts);
+    card.appendChild(d);
+  });
+  app.appendChild(card);
+}
+
+var ADMIN = T;
+function show(){
+  if (PAGE.mode === 'person') renderPerson();
+  else if (PAGE.mode === 'admin') renderAdmin();
+  else renderInvalid();
+}
+app.appendChild(el('div','center','読み込み中…'));
+fetch(API + '?action=get&t=' + encodeURIComponent(T))
+  .then(function(r){ return r.json(); })
+  .then(function(d){ PAGE = d; app.textContent = ''; show(); })
+  .catch(function(){ app.textContent = ''; var d = el('div','center'); d.appendChild(el('div','','読み込めませんでした。'));
+    d.appendChild(el('div','note','通信状況を確認して、ページを再読み込みしてください。')); app.appendChild(d); });
+</script>
+</body>
+</html>
